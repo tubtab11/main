@@ -31,17 +31,17 @@ item=`nodehealth.sh|grep "Node Type" | nawk '{print $5}'|cut -c 2-4`
 
     if [ $Node == "$item" ]; 
     then
-        echo "Node complated" >> $LOG1
+        echo "$(date +"%Y%m%d%H%M%S") : Node complated" >> $LOG1
     else
-        echo "Node failed" >> $LOG1
+        echo "$(date +"%Y%m%d%H%M%S") : Node failed" >> $LOG1
         exit 1
     fi
     
         if [ $Mode == "normal" ]; 
         then
-            echo "Node stop complated" >> $LOG1
+            echo "$(date +"%Y%m%d%H%M%S") : Node stop complated" >> $LOG1
         else
-            echo "Mode stop failed" >> $LOG1
+            echo "$(date +"%Y%m%d%H%M%S") : Mode stop failed" >> $LOG1
             exit 1
         fi
 #Halt all non-global zone
@@ -55,11 +55,11 @@ done
 chk_zone=`zoneadm list -v | awk '{print $2}'| grep -v NAME`
 if [ $chk_zone == "global" ]; then
   #shutdown non-zone completed
-  echo "shutdown non-zone completed $chk_zone " >> $LOG1
+  echo "$(date +"%Y%m%d%H%M%S") : shutdown non-zone completed $chk_zone " >> $LOG1
   exit 0 
 else
   #shutdown non-zone not completed
-  echo "shutdown non-zone not completed $chk_zone" >> $LOG1
+  echo "$(date +"%Y%m%d%H%M%S") : shutdown non-zone not completed $chk_zone" >> $LOG1
   exit 1
 fi
 #####################################################

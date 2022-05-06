@@ -33,9 +33,9 @@ item=`nodehealth.sh|grep "Node Type" | nawk '{print $5}'|cut -c 2-4`
 
     if [ $Node == "$item" ]; 
     then
-        echo "Node complated" >> $LOG1
+        echo "$(date +"%Y%m%d%H%M%S") : Node complated" >> $LOG1
     else
-        echo "Node failed" >> $LOG1
+        echo "$(date +"%Y%m%d%H%M%S") : Node failed" >> $LOG1
         exit 1
     fi
     
@@ -48,13 +48,13 @@ item=`nodehealth.sh|grep "Node Type" | nawk '{print $5}'|cut -c 2-4`
     
         elif [ $Mode == "normal" ]; 
         then
-            echo "Mode stop normal" >> $LOG1
+            echo "$(date +"%Y%m%d%H%M%S") : Mode stop normal" >> $LOG1
             #Shutdown Solaris OS
             init 5
             #Return exit code
             exit 0
         else
-            echo "Mode stop failed" >> $LOG1
+            echo "$(date +"%Y%m%d%H%M%S") : Mode stop failed" >> $LOG1
             exit 1
         fi
 ####################################################

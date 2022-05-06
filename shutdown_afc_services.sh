@@ -27,8 +27,8 @@ check_ps()
   do
         service_name="${my_array[$i]}"
         sudo pkill -9 $service_name
-        echo "kill Service [$service_name]" >> $LOG1
-        echo "complated\n" >> $LOG1
+        echo "$(date +"%Y%m%d%H%M%S") : kill Service [$service_name]" >> $LOG1
+        echo "$(date +"%Y%m%d%H%M%S") : complated\n" >> $LOG1
 
   done
 }
@@ -37,10 +37,10 @@ shutdown_status()
     value=`pmstatus.pl | grep 32m | egrep -v  "Process Manager Status" | egrep -v "no response" | cut -d ' ' -f2 | cut -c8-`
     if [ -z "$value" ]; 
     then
-        echo "Service Shutdown Complated" >> $LOG1
+        echo "$(date +"%Y%m%d%H%M%S") : Service Shutdown Complated" >> $LOG1
         exit 0
     else
-        echo "Service Shutdown Failed" >> $LOG1
+        echo "$(date +"%Y%m%d%H%M%S") : Service Shutdown Failed" >> $LOG1
         exit 1
     fi
 }
@@ -65,9 +65,9 @@ item=`nodehealth.sh|grep "Node Type" | nawk '{print $5}'|cut -c 2-4`
 
     if [ $Node == "$item" ]; 
     then
-        echo "Node complated" >> $LOG1
+        echo "$(date +"%Y%m%d%H%M%S") : Node complated" >> $LOG1
     else
-        echo "Node failed" >> $LOG1
+        echo "$(date +"%Y%m%d%H%M%S") : Node failed" >> $LOG1
         exit 0
     fi
     
@@ -79,9 +79,9 @@ item=`nodehealth.sh|grep "Node Type" | nawk '{print $5}'|cut -c 2-4`
             exit 0
         elif [ $Mode == "normal" ]; 
         then
-            echo "Mode stop normal" >> $LOG1
+            echo "$(date +"%Y%m%d%H%M%S") : Mode stop normal" >> $LOG1
         else
-            echo "Mode stop failed" >> $LOG1
+            echo "$(date +"%Y%m%d%H%M%S") : Mode stop failed" >> $LOG1
             exit 0
         fi
 ############################

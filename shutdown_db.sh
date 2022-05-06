@@ -80,9 +80,9 @@ item="ofs"
 
     if [ $Node == "$item" ]; 
     then
-        echo "Node complated" >> $LOG
+        echo "$(date +"%Y%m%d%H%M%S") : Node complated" >> $LOG
     else
-        echo "Node failed" >> $LOG
+        echo "$(date +"%Y%m%d%H%M%S") : Node failed" >> $LOG
         exit 1
     fi
     
@@ -93,9 +93,9 @@ item="ofs"
             
         elif [ $Mode == "normal" ]; 
         then
-            echo "Mode stop normal" >> $LOG
+            echo "$(date +"%Y%m%d%H%M%S") : Mode stop normal" >> $LOG
         else
-            echo "Mode stop failed" >> $LOG
+            echo "$(date +"%Y%m%d%H%M%S") : Mode stop failed" >> $LOG
             exit 1
         fi
 
