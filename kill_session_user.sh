@@ -59,7 +59,6 @@ and s.username is not null
 and s.username not in ('SYS','SYSTEM');
 exit;
 EOF
-}
 
 if [ $? == "0" ];
 then
@@ -77,6 +76,7 @@ else
     echo "$(date +"%Y%m%d%H%M%S") : Connect Database Failed" >> $LOG1
     exit 1
 fi
+}
 
 ##############################################
 #              Main Function                 #
