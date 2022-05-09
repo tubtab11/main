@@ -8,11 +8,11 @@
 #####################################################
 export LOGS=/afc/ERGnrpe/logs
 
+NOW=$(date +"%Y%m%d")
+time=$(time +"%H%M%S")
+LOG1=$LOGS/auto_shutdown_zone_$NOW+$time.log
 #Reload profile
 . ~/.profile
-
-NOW=$(date +"%Y%m%d_%H%M%S")
-LOG1=$LOGS/auto_shutdown_zone_$NOW.log
 
 # Check excecute with arguement.
 while getopts n:m: flag

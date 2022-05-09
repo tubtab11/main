@@ -8,8 +8,9 @@ export LOG_DIR=/export/home/smsadmin/scripts/logs
 export PATH_OLS=/afc/ergols/scripts
 export LOGS=/afc/ERGnrpe/logs
 
-NOW=$(date +"%Y%m%d_%H%M%S")
-LOG1=$LOGS/auto_shutdown_afc_$NOW.log
+NOW=$(date +"%Y%m%d")
+time=$(time +"%H%M%S")
+LOG1=$LOGS/auto_shutdown_afc_$NOW+$time.log
 
 stop_node()
 {   

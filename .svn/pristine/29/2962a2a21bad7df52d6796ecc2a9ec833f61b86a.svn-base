@@ -31,10 +31,11 @@ export LOG_DIR=$ORACLE_BASE/admin/$ORACLE_SID/scripts/logs
 export LOGS=/afc/ERGnrpe/logs
 ############################################################################################-
 
-NOW=$(date +"%Y%m%d_%H%M%S")
+NOW=$(date +"%Y%m%d")
+time=$(time +"%H%M%S")
 TMP_ACTIVE_SESS_FILE=$TMP/kill_active_session.sql
-LOG=$LOG_DIR/auto_kill_sesions_$NOW.log
-LOG1=$LOGS/auto_kill_sesions_$NOW.log
+LOG=$LOG_DIR/auto_kill_sesions_$NOW+$time.log
+LOG1=$LOGS/auto_kill_sesions_$NOW+$time.log
 ORACLE_INITD=/app/oracle/ofsdb/init.d
 
 kill_session()
