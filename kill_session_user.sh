@@ -68,7 +68,7 @@ then
     sqlplus -s "/as sysdba" < $TMP_ACTIVE_SESS_FILE >> $LOG1
     echo "$(date +"%Y%m%d%H%M%S") : Connect Database Complated" >> $LOG1
 
-    if [ $? == "0" ]
+    if [ $? == "0" ];
     then 
         echo "$(date +"%Y%m%d%H%M%S") : Status connect complated" >> $LOG1
         exit 0
