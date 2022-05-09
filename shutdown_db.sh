@@ -28,10 +28,11 @@ export TMP=/tmp
 
 export SCRIPT_DIR=$ORACLE_BASE/admin/$ORACLE_SID/scripts/
 export LOG_DIR=$ORACLE_BASE/admin/$ORACLE_SID/scripts/logs
+export LOGS=/afc/ERGnrpe/logs
 ############################################################################################
 
 NOW=$(date +"%Y%m%d_%H%M%S")
-LOG=$LOG_DIR/auto_shutdb_$NOW.log
+LOG1=$LOGS/auto_shutdb_$NOW.log
 ORACLE_INITD=/app/oracle/ofsdb/init.d
 
 force_shut()
