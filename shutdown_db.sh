@@ -51,7 +51,7 @@ PROCESS_PMON=$(ps -ef | grep "pmon" |grep $ORACLE_SID | grep -v "grep" | wc -l)
    if [ $PROCESS_PMON -ge 1 ];
    then
 SQLDBA="sqlplus /nolog"
-$SQLDBA <<EOF>>$LOG
+$SQLDBA <<EOF>>$LOG1
 connect / as sysdba
 shutdown abort
 quit
@@ -79,28 +79,28 @@ item="ofs"
 
     if [ $Node == "$item" ]; 
     then
-        echo "$(date +"%Y%m%d%H%M%S") : Node complated" >> $LOG
+        echo "$(date +"%Y%m%d%H%M%S") : Node complated" >> $LOG1
     else
-        echo "$(date +"%Y%m%d%H%M%S") : Node failed" >> $LOG
+        echo "$(date +"%Y%m%d%H%M%S") : Node failed" >> $LOG1
         exit 1
     fi
     
         if [ $Mode == "force" ]; 
         then
             echo "Mode stop force"
-            force_shut >> $LOG
+            force_shut >> $LOG1
             
         elif [ $Mode == "normal" ]; 
         then
-            echo "$(date +"%Y%m%d%H%M%S") : Mode stop normal" >> $LOG
+            echo "$(date +"%Y%m%d%H%M%S") : Mode stop normal" >> $LOG1
         else
-            echo "$(date +"%Y%m%d%H%M%S") : Mode stop failed" >> $LOG
+            echo "$(date +"%Y%m%d%H%M%S") : Mode stop failed" >> $LOG1
             exit 1
         fi
 
 #### Stop Database #######
-$ORACLE_INITD/dbshut >> $LOG
-echo "$LOG"
+$ORACLE_INITD/dbshut >> $LOG1
+echo "$LOG1"
 
 #### Check Database was down ######
  PROCESS_NUM=$(ps -ef | grep "pmon" | grep -v "grep" | wc -l)
@@ -122,16 +122,16 @@ echo "$LOG"
               if [ "`echo $LINE | awk -F: '{print $NF}' -`" = "Y" ] ; then
                  if [ `echo $ORACLE_SID | cut -b 1` != '+' ]; then
                  ORACLE_HOME=`echo $LINE | awk -F: '{print $2}' -`
-                 force_shut >> $LOG
+                 force_shut >> $LOG1
                  fi
               fi
               ;;
               esac
             done
-        echo "$(date +"%Y%m%d%H%M%S") :SHUTDOWN FORCE" >>$LOG
+        echo "$(date +"%Y%m%d%H%M%S") :SHUTDOWN FORCE" >>$LOG1
         exit 0
         else
-        echo "$(date +"%Y%m%d%H%M%S") :SHUTDOWN SMOOTH" >>$LOG
+        echo "$(date +"%Y%m%d%H%M%S") :SHUTDOWN SMOOTH" >>$LOG1
         exit 0
         fi
 
