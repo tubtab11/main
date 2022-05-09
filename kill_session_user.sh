@@ -34,7 +34,7 @@ export LOGS=/afc/ERGnrpe/logs
 NOW=$(date +"%Y%m%d_%H%M%S")
 TMP_ACTIVE_SESS_FILE=$TMP/kill_active_session.sql
 LOG=$LOG_DIR/auto_kill_sesions_$NOW.log
-LOG1=$LOGS/auto_kill_sesions_$NOW+$time.log
+LOG1=$LOGS/auto_kill_sesions_$NOW.log
 ORACLE_INITD=/app/oracle/ofsdb/init.d
 
 kill_session()
@@ -60,15 +60,15 @@ and s.username not in ('SYS','SYSTEM');
 exit;
 EOF
 
-sqlplus -s "/as sysdba" < $TMP_ACTIVE_SESS_FILE >> $LOG
+sqlplus -s "/as sysdba" < $TMP_ACTIVE_SESS_FILE >> $LOG1
 result=$?
 
     if [ $result -eq 0 ];
     then
-        echo "$(date +"%Y%m%d%H%M%S") : Connect Database Complated" >> $LOG1
+        echo "$(date +"%Y%m%d%H%M%S") : Success to kill the active session" >> $LOG1
         exit 0
     else
-        echo "$(date +"%Y%m%d%H%M%S") : Connect Database Failed" >> $LOG1
+        echo "$(date +"%Y%m%d%H%M%S") : Fail to kill the active session" >> $LOG1
         exit 1
 }
 
