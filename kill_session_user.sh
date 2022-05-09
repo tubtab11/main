@@ -60,9 +60,6 @@ and s.username not in ('SYS','SYSTEM');
 exit;
 EOF
 
-sqlplus -s "/as sysdba" < $TMP_ACTIVE_SESS_FILE >> $LOG
-echo "$LOG"
-
 if [ $? == "0" ];
 then
     sqlplus -s "/as sysdba" < $TMP_ACTIVE_SESS_FILE >> $LOG1
@@ -98,7 +95,7 @@ echo "Node: $Node";
 echo "Mode: $Mode";
 
 #Check nodehealt of node type 
-item=`nodehealth.sh|grep "Node Type" | nawk '{print $5}'|cut -c 2-4`
+item="ofs"
 
     if [ $Node == "$item" ]; 
     then
