@@ -129,10 +129,10 @@ echo "$LOG1"
               ;;
               esac
             done
-        echo "$(date +"%Y%m%d%H%M%S") :SHUTDOWN FORCE" >>$LOG1
+        echo "$(date +"%Y%m%d%H%M%S") : SHUTDOWN FORCE" >>$LOG1
         exit 0
         else
-        echo "$(date +"%Y%m%d%H%M%S") :SHUTDOWN SMOOTH" >>$LOG1
+        echo "$(date +"%Y%m%d%H%M%S") : SHUTDOWN SMOOTH" >>$LOG1
         exit 0
         fi
 
