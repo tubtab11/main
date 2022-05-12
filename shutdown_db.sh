@@ -72,8 +72,8 @@ do
 
     esac
 done
-echo "Node: $Node";
-echo "Mode: $Mode";
+echo "$(date +"%Y%m%d%H%M%S") Node: $Node"; >> $LOG1
+echo "$(date +"%Y%m%d%H%M%S") Mode: $Mode"; >> $LOG1
 
 #Check nodehealt of node type 
 item="ofs"
