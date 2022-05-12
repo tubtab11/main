@@ -73,7 +73,7 @@ item=`nodehealth.sh|grep "Node Type" | nawk '{print $5}'|cut -c 2-4`
     
         if [ $Mode == "force" ]; 
         then
-            echo "$(date +"%Y%m%d%H%M%S") : Mode stop force\n" >> $LOG1
+            echo "$(date +"%Y%m%d%H%M%S") : Mode stop force" >> $LOG1
             check_ps
             shutdown_status
             exit 0
