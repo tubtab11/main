@@ -49,7 +49,7 @@ shutdown_status()
 # ==========================
 
 # Check excecute with arguement.
-while getopts n:m: flag
+while getopts n:m: flag 
 do
     case "${flag}" in
         n) Node=${OPTARG};;
@@ -73,10 +73,11 @@ item=`nodehealth.sh|grep "Node Type" | nawk '{print $5}'|cut -c 2-4`
     
         if [ $Mode == "force" ]; 
         then
-            echo "$(date +"%Y%m%d%H%M%S") : Mode stop force"  >> $LOG1
+            echo "Mode stop force" >> $LOG1
             check_ps
             shutdown_status
             exit 0
+
         elif [ $Mode == "normal" ]; 
         then
             echo "$(date +"%Y%m%d%H%M%S") : Mode stop normal" >> $LOG1
@@ -90,4 +91,4 @@ sleep 1.0
 check_ps
 sleep 1.0
 shutdown_status
-################################################################################
+#############################
