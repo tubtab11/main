@@ -41,7 +41,7 @@ shutdown_status()
         exit 0
     else
         echo "$(date +"%Y%m%d%H%M%S") : Service Shutdown Failed" >> $LOG1
-        exit 1
+        exit 101
     fi
 }
 # ==========================

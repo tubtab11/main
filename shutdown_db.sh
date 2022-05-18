@@ -102,9 +102,31 @@ item="ofs"
             exit 255
         fi
 
+#### Connect Database #######
+sqlplus -s "/as sysdba" >> $LOG1
+result=$?
+
+    if [ $result -eq 0 ];
+    then
+        echo "$(date +"%Y%m%d%H%M%S") : Success to connect the oracle database" >> $LOG1
+        exit 0
+    else
+        echo "$(date +"%Y%m%d%H%M%S") : Fail to shutdown the database" >> $LOG1
+        exit 201
+    fi
+
 #### Stop Database #######
 $ORACLE_INITD/dbshut >> $LOG1
-echo "$LOG1"
+result1=$?
+
+  if [ $result1 -eq 0 ];
+    then
+        echo "$(date +"%Y%m%d%H%M%S") : Success to shutdown the database" >> $LOG1
+        exit 0
+    else
+        echo "$(date +"%Y%m%d%H%M%S") : Fail to shutdown the database" >> $LOG1
+        exit 203
+    fi
 
 #### Check Database was down ######
  PROCESS_NUM=$(ps -ef | grep "pmon" | grep -v "grep" | wc -l)

@@ -65,11 +65,16 @@ result=$?
 
     if [ $result -eq 0 ];
     then
+        echo "$(date +"%Y%m%d%H%M%S") : Success to connect the oracle database" >> $LOG1
+        exit 0
         echo "$(date +"%Y%m%d%H%M%S") : Success to kill the active session" >> $LOG1
         exit 0
     else
+        echo "$(date +"%Y%m%d%H%M%S") : Fail to connect the oracle database" >> $LOG1
+        exit 201
         echo "$(date +"%Y%m%d%H%M%S") : Fail to kill the active session" >> $LOG1
-        exit 1
+        exit 202
+    fi
 }
 
 
@@ -94,7 +99,6 @@ item="ofs"
     if [ $Node == "$item" ]; 
     then
         echo "$(date +"%Y%m%d%H%M%S") : Node complated" >> $LOG1
-        exit 0
     else
         echo "Node failed" >> $LOG1
         exit 255
