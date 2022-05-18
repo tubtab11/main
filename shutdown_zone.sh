@@ -41,7 +41,7 @@ item=`nodehealth.sh|grep "Node Type" | nawk '{print $5}'|cut -c 2-4`
         if [ $Mode == "normal" ]; 
         then
             echo "$(date +"%Y%m%d%H%M%S") : Node stop complated" >> $LOG1
-            exit 
+            exit 0
         else
             echo "$(date +"%Y%m%d%H%M%S") : Mode stop failed" >> $LOG1
             exit 255
