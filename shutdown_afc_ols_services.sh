@@ -68,7 +68,7 @@ item=`nodehealth.sh|grep "Node Type" | nawk '{print $5}'|cut -c 2-4`
         echo "$(date +"%Y%m%d%H%M%S") : Node complated" >> $LOG1
     else
         echo "$(date +"%Y%m%d%H%M%S") : Node failed" >> $LOG1
-        exit 1
+        exit 255
     fi
     
         if [ $Mode == "force" ]; 
@@ -83,7 +83,7 @@ item=`nodehealth.sh|grep "Node Type" | nawk '{print $5}'|cut -c 2-4`
             echo "$(date +"%Y%m%d%H%M%S") : Mode stop normal" >> $LOG1
         else
             echo "$(date +"%Y%m%d%H%M%S") : Mode stop failed" >> $LOG1
-            exit 1
+            exit 255
         fi
 ############################
 stop_node
