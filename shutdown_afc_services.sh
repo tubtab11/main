@@ -27,7 +27,7 @@ check_ps()
         sudo pkill -9 $service_name
         echo "$(date +"%Y%m%d%H%M%S") : kill Service [$service_name]" >> $LOG1
         echo "$(date +"%Y%m%d%H%M%S") : complated\n" >> $LOG1
-        exit 0
+       
 
   done
 }
@@ -37,7 +37,7 @@ shutdown_status()
     if [ -z "$value" ]; 
     then
         echo "$(date +"%Y%m%d%H%M%S") : Service Shutdown Complated" >> $LOG1
-        exit 0
+        
     else
         echo "$(date +"%Y%m%d%H%M%S") : Service Shutdown Failed" >> $LOG1
         exit 101
@@ -65,7 +65,7 @@ item=`nodehealth.sh|grep "Node Type" | nawk '{print $5}'|cut -c 2-4`
     if [ $Node == "$item" ]; 
     then
         echo "$(date +"%Y%m%d%H%M%S") : Node complated" >> $LOG1
-        exit 0
+        
     else
         echo "$(date +"%Y%m%d%H%M%S") : Node failed" >> $LOG1
         exit 255
@@ -76,12 +76,12 @@ item=`nodehealth.sh|grep "Node Type" | nawk '{print $5}'|cut -c 2-4`
             echo "Mode stop force" >> $LOG1
             check_ps
             shutdown_status
-            exit 0
+            
 
         elif [ $Mode == "normal" ]; 
         then
             echo "$(date +"%Y%m%d%H%M%S") : Mode stop normal" >> $LOG1
-            exit 0
+         
         else
             echo "$(date +"%Y%m%d%H%M%S") : Mode stop failed" >> $LOG1
             exit 255

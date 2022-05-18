@@ -38,7 +38,7 @@ shutdown_status()
     if [ -z "$value" ]; 
     then
         echo "$(date +"%Y%m%d%H%M%S") : Service Shutdown Complated" >> $LOG1
-        exit 0
+    
     else
         echo "$(date +"%Y%m%d%H%M%S") : Service Shutdown Failed" >> $LOG1
         exit 101
@@ -76,8 +76,7 @@ item=`nodehealth.sh|grep "Node Type" | nawk '{print $5}'|cut -c 2-4`
             echo "$(date +"%Y%m%d%H%M%S") : Mode stop force" >> $LOG1
             check_ps
             shutdown_status
-            exit 0
-
+    
         elif [ $Mode == "normal" ]; 
         then
             echo "$(date +"%Y%m%d%H%M%S") : Mode stop normal" >> $LOG1
