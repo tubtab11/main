@@ -38,6 +38,7 @@ shutdown_status()
     if [ -z "$value" ]; 
     then
         echo "$(date +"%Y%m%d%H%M%S") : Service Shutdown Complated" >> $LOG1
+        exit 0
     
     else
         echo "$(date +"%Y%m%d%H%M%S") : Service Shutdown Failed" >> $LOG1
