@@ -90,7 +90,7 @@ item="ofs"
     
         if [ $Mode == "force" ]; 
         then
-            echo "Mode stop force"
+            echo "$(date +"%Y%m%d%H%M%S") : Mode stop force" >> $LOG1
             force_shut >> $LOG1
            
         elif [ $Mode == "normal" ]; 
@@ -124,7 +124,7 @@ result=$?
 
 #### Stop Database #######
 $ORACLE_INITD/dbshut >> $LOG1
-echo "$LOG1"
+echo "$(date +"%Y%m%d%H%M%S") : $LOG1"
 
 #### Check Database was down ######
  PROCESS_NUM=$(ps -ef | grep "pmon" | grep -v "grep" | wc -l)
