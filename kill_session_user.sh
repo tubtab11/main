@@ -67,13 +67,13 @@ result=$?
     then
         echo "$(date +"%Y%m%d%H%M%S") : Success to connect the oracle database" >> $LOG1
 
-        if [ $result -eq 0 ];
+        if [ $result -eq 1 ];
         then
-            echo "$(date +"%Y%m%d%H%M%S") : Success to kill the active session" >> $LOG1
-
-        else
             echo "$(date +"%Y%m%d%H%M%S") : Fail to kill the active session" >> $LOG1
             exit 203
+        else
+            echo "$(date +"%Y%m%d%H%M%S") : Success to kill the active session" >> $LOG1
+            exit 0
         fi
     else
         echo "$(date +"%Y%m%d%H%M%S") : Fail to connect the oracle database" >> $LOG1
