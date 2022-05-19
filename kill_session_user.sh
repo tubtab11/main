@@ -60,7 +60,7 @@ and s.username not in ('SYS','SYSTEM');
 exit;
 EOF
 
-sqlplus -s "/as sysdba" < $TMP_ACTIVE_SESS_FILE >> $LOG1
+qlplus -s "/as sysdba" < $TMP_ACTIVE_SESS_FILE >> $LOG1
 result=$?
 
     if [ $result -eq 0 ];
@@ -111,7 +111,7 @@ item="ofs"
         then
             echo "$(date +"%Y%m%d%H%M%S") : Mode stop normal" >> $LOG1
             kill_session
-            
+
         else
             echo "$(date +"%Y%m%d%H%M%S") : Mode stop failed" >> $LOG1
             exit 255
