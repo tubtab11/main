@@ -34,6 +34,7 @@ export LOGS=/afc/ERGnrpe/logs
 NOW=$(date +"%Y%m%d_%H%M%S")
 LOG1=$LOGS/auto_shutdb_$NOW.log
 ORACLE_INITD=/app/oracle/ofsdb/init.d
+TMP_ACTIVE_SESS_FILE=$TMP/check_active_session.sql
 
 force_shut()
 {
@@ -101,12 +102,40 @@ item="ofs"
             exit 255
         fi
 
+#========================
+## Function check connection Database ##
+rm -f $TMP_ACTIVE_SESS_FILE
+sqlplus -s /nolog <<EOF>$TMP_ACTIVE_SESS_FILE
+connect / as sysdba
+exit;
+EOF
+
+sqlplus -s "/as sysdba" < $TMP_ACTIVE_SESS_FILE >> $LOG1
+result=$?
+
+    if [ $result -eq 0 ];
+    then
+        echo "$(date +"%Y%m%d%H%M%S") : Success to connect the oracle database" >> $LOG1
+
+    else
+        echo "$(date +"%Y%m%d%H%M%S") : Fail to connect the oracle database" >> $LOG1
+        exit 201
+    fi
+
 #### Stop Database #######
 $ORACLE_INITD/dbshut >> $LOG1
 echo "$LOG1"
 
 #### Check Database was down ######
  PROCESS_NUM=$(ps -ef | grep "pmon" | grep -v "grep" | wc -l)
+
+    if [ $PROCESS_NUM -ge 1 ];
+        then
+        echo "$(date +"%Y%m%d%H%M%S") : Fail to stop Database oracle database" >> $LOG1
+        exit 203
+    else
+        echo "$(date +"%Y%m%d%H%M%S") : Success to stop Database oracle database" >> $LOG1
+    fi
 
         if [ $PROCESS_NUM -ge 1 ];
         then
