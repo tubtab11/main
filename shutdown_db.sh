@@ -61,6 +61,29 @@ EOF
    fi
 }
 
+check_con()
+{
+#========================
+## Function check connection Database ##
+rm -f $TMP_ACTIVE_SESS_FILE
+sqlplus -s /nolog <<EOF>$TMP_ACTIVE_SESS_FILE
+connect / as sysdba
+exit;
+EOF
+
+sqlplus -s "/as sysdba" < $TMP_ACTIVE_SESS_FILE >> $LOG1
+result=$?
+
+    if [ $result -eq 0 ];
+    then
+        echo "$(date +"%Y%m%d%H%M%S") : Success to connect the oracle database" >> $LOG1
+
+    else
+        echo "$(date +"%Y%m%d%H%M%S") : Fail to connect the oracle database" >> $LOG1
+        exit 201
+    fi
+}
+
 #==========================
 # M A I N
 #==========================
@@ -91,37 +114,19 @@ item="ofs"
         if [ $Mode == "force" ]; 
         then
             echo "$(date +"%Y%m%d%H%M%S") : Mode stop force" >> $LOG1
-            force_shut >> $LOG1
+            check_con
+            force_shut 
            
         elif [ $Mode == "normal" ]; 
         then
             echo "$(date +"%Y%m%d%H%M%S") : Mode stop normal" >> $LOG1
+            check_con
            
         else
             echo "$(date +"%Y%m%d%H%M%S") : Mode stop failed" >> $LOG1
             exit 255
         fi
-
-#========================
-## Function check connection Database ##
-rm -f $TMP_ACTIVE_SESS_FILE
-sqlplus -s /nolog <<EOF>$TMP_ACTIVE_SESS_FILE
-connect / as sysdba
-exit;
-EOF
-
-sqlplus -s "/as sysdba" < $TMP_ACTIVE_SESS_FILE >> $LOG1
-result=$?
-
-    if [ $result -eq 0 ];
-    then
-        echo "$(date +"%Y%m%d%H%M%S") : Success to connect the oracle database" >> $LOG1
-
-    else
-        echo "$(date +"%Y%m%d%H%M%S") : Fail to connect the oracle database" >> $LOG1
-        exit 201
-    fi
-
+        
 #### Stop Database #######
 $ORACLE_INITD/dbshut >> $LOG1
 echo "$(date +"%Y%m%d%H%M%S") : $LOG1"
