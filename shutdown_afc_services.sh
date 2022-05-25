@@ -77,7 +77,6 @@ item=`nodehealth.sh|grep "Node Type" | nawk '{print $5}'|cut -c 2-4`
             check_ps
             shutdown_status
             
-
         elif [ $Mode == "normal" ]; 
         then
             echo "$(date +"%Y%m%d%H%M%S") : Mode stop normal" >> $LOG1
