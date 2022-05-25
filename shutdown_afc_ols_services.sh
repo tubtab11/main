@@ -37,10 +37,19 @@ check_ps()
   for ((i=0; i < ${#my_array[@]}; i++ ));
   do
         service_name="${my_array[$i]}"
-        sudo pkill -9 $service_name
-        echo "$(date +"%Y%m%d%H%M%S") : kill Service [$service_name]" >> $LOG1
-        echo "$(date +"%Y%m%d%H%M%S") : complated\n" >> $LOG1
+        while :
+            if [ -z "$value" ];
+            then
+                echo "$(date +"%Y%m%d%H%M%S") : complated\n" >> $LOG1
 
+            else
+                sudo pkill -9 $service_name
+                echo "$(date +"%Y%m%d%H%M%S") : kill Service [$service_name]" >> $LOG1
+                echo "$(date +"%Y%m%d%H%M%S") : complated\n" >> $LOG1
+                break
+            fi
+        do
+        done
   done
 }
 shutdown_status()
