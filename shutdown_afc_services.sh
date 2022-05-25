@@ -27,7 +27,6 @@ check_ps()
         sudo pkill -9 $service_name
         echo "$(date +"%Y%m%d%H%M%S") : kill Service [$service_name]" >> $LOG1
         echo "$(date +"%Y%m%d%H%M%S") : complated\n" >> $LOG1
-       
 
   done
 }
