@@ -56,7 +56,7 @@ and s.username not in ('SYS','SYSTEM');
 exit;
 EOF
 
-sqlplus -s "/as sysdba" < $TMP_ACTIVE_SESS_FILE >> $LOG1
+sqlplus -s "/as sysdba" < $TMP_ACTIVE_SESS_FILE >> $LOG
 result=$?
 
     if [ $result -eq 0 ];
