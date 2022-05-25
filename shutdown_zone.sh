@@ -1,11 +1,16 @@
 #!/bin/bash
-#####################################################
-# Remote shutdown non-global zones
-# Script name : OFS_Remote_Shutdown_Zone.sh
-# Version  Date      Who             What
-# -------- --------- --------------- ----------------
-# 1.0.0    11 Sep 18 BPS Infra Team  Initial Release
-#####################################################
+#
+# Purpose  : The purpose of this script will shutdown all databases listed in the oratab file
+#
+#            1.) shutdown zone.
+#            2.) return status 0 completed.
+# Change History:
+#
+# Version  Date      Who                  What
+# -------- --------- -------- ----------------------------------------------------------------------
+# 1.0.0    11 MAY 18 nattapon kuntaisong  Initial Release
+#
+#
 export LOGS=/afc/ERGnrpe/logs
 
 #Reload profile

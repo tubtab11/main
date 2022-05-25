@@ -1,19 +1,15 @@
 #!/bin/bash
 #
-# Program  : remote_shutdown_oracledb.sh
-#
 # Purpose  : The purpose of this script will shutdown all databases listed in the oratab file
 #
 #            1.) Input parameter no need
-#            2.) Stop listener
-#            3.) Kill pending process
-#            4.) Stop Database
-#            5.) return status 0 completed.
+#            2.) Kill pending process
+#            3.) return status 0 completed.
 # Change History:
 #
-# Version  Date      Who      What
+# Version  Date      Who                  What
 # -------- --------- -------- ----------------------------------------------------------------------
-# 1.0.0    11 Sep 18 NatthawutP  Initial Release
+# 1.0.0    11 MAY 18 nattapon kuntaisong  Initial Release
 #
 #
 . ~/.profile
