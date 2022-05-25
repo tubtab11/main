@@ -66,7 +66,7 @@ result=$?
         if [ $result -eq 1 ];
         then
             echo "$(date +"%Y%m%d%H%M%S") : Fail to kill the active session" >> $LOG1
-            exit 203
+            exit 202 # how to test this error code
         else
             echo "$(date +"%Y%m%d%H%M%S") : Success to kill the active session" >> $LOG1
             exit 0

@@ -64,7 +64,6 @@ if [ $chk_zone == "global" ]; then
   #shutdown non-zone completed
   echo "$(date +"%Y%m%d%H%M%S") : shutdown non-zone completed $chk_zone " >> $LOG1
   exit 0
-  
 else
   #shutdown non-zone not completed
   echo "$(date +"%Y%m%d%H%M%S") : shutdown non-zone not completed $chk_zone" >> $LOG1
