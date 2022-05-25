@@ -132,13 +132,7 @@ echo "$(date +"%Y%m%d%H%M%S") : $LOG1"
     if [ $PROCESS_NUM -ge 1 ];
         then
         echo "$(date +"%Y%m%d%H%M%S") : Fail to stop Database oracle database" >> $LOG1
-        exit 203
-    else
-        echo "$(date +"%Y%m%d%H%M%S") : Success to stop Database oracle database" >> $LOG1
-    fi
-
-        if [ $PROCESS_NUM -ge 1 ];
-        then
+        
         cat $ORATAB | while read LINE
             do
               case $LINE in
@@ -160,10 +154,18 @@ echo "$(date +"%Y%m%d%H%M%S") : $LOG1"
               ;;
               esac
             done
-        echo "$(date +"%Y%m%d%H%M%S") : SHUTDOWN FORCE" >>$LOG1
+            PROCESS_NUM=$(ps -ef | grep "pmon" | grep -v "grep" | wc -l)
+            if [ $PROCESS_NUM -ge 1 ];
+            then   
+                echo "Fail to shutdown the database" 
+                exit 203
+            else   
+                echo "Success to shutdown the database "
+                echo "FORCE"    
+                exit 0
+            fi
+    else
+        echo "$(date +"%Y%m%d%H%M%S") : Success to stop Database oracle database" >> $LOG1
+        echo "SMOOHT"
         exit 0
-        else
-        echo "$(date +"%Y%m%d%H%M%S") : SHUTDOWN SMOOTH" >>$LOG1
-        exit 0
-        fi
-
+    fi

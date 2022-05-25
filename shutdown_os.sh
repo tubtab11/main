@@ -23,7 +23,7 @@ LOG1=$LOGS/auto_shutdown_os_$NOW.log
 
 shut_ini()
 {
-    value=`sudo init 5`
+    sudo init 5
     res=$?
     
     if [ $res -eq 0 ]; 
