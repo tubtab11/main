@@ -76,7 +76,6 @@ result=$?
                 echo "$(date +"%Y%m%d%H%M%S") : Fail to kill the active session" >> $LOG1
                 exit 202
             fi
-
         fi
     else
         echo "$(date +"%Y%m%d%H%M%S") : Fail to connect the oracle database" >> $LOG1
