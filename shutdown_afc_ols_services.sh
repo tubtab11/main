@@ -30,6 +30,15 @@ stop_node()
 }
 check_ps()
 {
+    value=`pmstatus.pl | grep 32m | egrep -v  "Process Manager Status" | egrep -v "no response" | cut -d ' ' -f2 | cut -c8-`
+    if [ ! -z "$value" ];
+    then
+        echo "$(date +"%Y%m%d%H%M%S") : There is no application process."
+        exit 0
+    fi
+}
+force_kill()
+{
   value=`pmstatus.pl | grep 32m | egrep -v  "Process Manager Status" | egrep -v "no response" | cut -d ' ' -f2 | cut -c8-`
   declare -a my_array
   my_array=($value)
@@ -37,19 +46,7 @@ check_ps()
   for ((i=0; i < ${#my_array[@]}; i++ ));
   do
         service_name="${my_array[$i]}"
-        while :
-            if [ -z "$value" ];
-            then
-                echo "$(date +"%Y%m%d%H%M%S") : complated\n" >> $LOG1
-
-            else
-                sudo pkill -9 $service_name
-                echo "$(date +"%Y%m%d%H%M%S") : kill Service [$service_name]" >> $LOG1
-                echo "$(date +"%Y%m%d%H%M%S") : complated\n" >> $LOG1
-                break
-            fi
-        do
-        done
+        sudo pkill -9 $service_name
   done
 }
 shutdown_status()
@@ -106,9 +103,8 @@ item=`nodehealth.sh|grep "Node Type" | nawk '{print $5}'|cut -c 2-4`
             exit 255
         fi
 ############################
-stop_node
-sleep 1.0
 check_ps
-sleep 1.0
+stop_node
+force_kill
 shutdown_status
 #############################

@@ -58,24 +58,26 @@ EOF
 
 check_con()
 {
-#========================
-## Function check connection Database ##
+    PROCESS_NUM=$(ps -ef | grep "pmon" | grep -v "grep" | wc -l)
+    if [ $PROCESS_NUM -eq 0 ];
+    then
+        echo "$(date +"%Y%m%d%H%M%S") : There is no running database process." >> $LOG1
+        exit 0
+    else
+        echo "$(date +"%Y%m%d%H%M%S") : There is running database process." >> $LOG1
 rm -f $TMP_ACTIVE_SESS_FILE
 sqlplus -s /nolog <<EOF>$TMP_ACTIVE_SESS_FILE
 connect / as sysdba
 exit;
 EOF
-
-sqlplus -s "/as sysdba" < $TMP_ACTIVE_SESS_FILE >> $LOG1
-result=$?
-
-    if [ $result -eq 0 ];
-    then
-        echo "$(date +"%Y%m%d%H%M%S") : Success to connect the oracle database" >> $LOG1
-
-    else
-        echo "$(date +"%Y%m%d%H%M%S") : Fail to connect the oracle database" >> $LOG1
+        result=$?
+        if [ $result -eq 0 ];
+        then
+            echo "$(date +"%Y%m%d%H%M%S") : Success to connect the oracle database" >> $LOG1
+        else
+            echo "$(date +"%Y%m%d%H%M%S") : Fail to connect the oracle database" >> $LOG1
         exit 201
+        fi
     fi
 }
 

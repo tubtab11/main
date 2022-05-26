@@ -29,8 +29,8 @@ export LOGS=/afc/ERGnrpe/logs
 
 NOW=$(date +"%Y%m%d_%H%M%S")
 TMP_ACTIVE_SESS_FILE=$TMP/kill_active_session.sql
-LOG=$LOG_DIR/check_kill_sesions.log
-LOG1=$LOGS/auto_kill_sesions_$NOW.log
+LOG=$LOG_DIR/check_kill_sesions.log # name the variable to friendly  : SQL_SESIONLOG
+LOG1=$LOGS/auto_kill_sesions_$NOW.log # name the variable to friendly : KILL_SESIONLOG
 ORACLE_INITD=/app/oracle/ofsdb/init.d
 
 kill_session()
@@ -56,26 +56,33 @@ and s.username not in ('SYS','SYSTEM');
 exit;
 EOF
 
-sqlplus -s "/as sysdba" < $TMP_ACTIVE_SESS_FILE >> $LOG
 result=$?
 
     if [ $result -eq 0 ];
     then
-        echo "$(date +"%Y%m%d%H%M%S") : Success to connect the oracle database" >> $LOG1
-    
-        path=`grep "System altered." $LOG_DIR/check_kill_sesions.log`
-        if [ ! -z "$path" ];
+        count=`cat $TMP_ACTIVE_SESS_FILE |wc -l`
+        if [ $count -eq 0 ];
         then
-            echo "$(date +"%Y%m%d%H%M%S") : Success to kill the active session" >> $LOG1
+            echo "There is no active session to kill." >> $LOG1
             exit 0
         else
-            echo "$(date +"%Y%m%d%H%M%S") : Fail to kill the active session" >> $LOG1
-            exit 202
+            sqlplus -s "/as sysdba" < $TMP_ACTIVE_SESS_FILE >> $LOG
+            altresult=`grep "System altered." $LOG_DIR/check_kill_sesions.log`
+            if [ ! -z "$altresult" ];
+            then
+                echo "$(date +"%Y%m%d%H%M%S") : Success to kill the active session" >> $LOG1
+                exit 0
+            else
+                echo "$(date +"%Y%m%d%H%M%S") : Fail to kill the active session" >> $LOG1
+                exit 202
+            fi
+
         fi
     else
         echo "$(date +"%Y%m%d%H%M%S") : Fail to connect the oracle database" >> $LOG1
         exit 201
     fi
+
 }
 
 ##############################################
@@ -104,12 +111,12 @@ item="ofs"
         exit 255
     fi
     
-        if [ $Mode == "normal" ]; 
-        then
-            echo "$(date +"%Y%m%d%H%M%S") : Mode stop normal" >> $LOG1
-            kill_session
+    if [ $Mode == "normal" ]; 
+    then
+        echo "$(date +"%Y%m%d%H%M%S") : Mode stop normal" >> $LOG1
+        kill_session
 
-        else
-            echo "$(date +"%Y%m%d%H%M%S") : Mode stop failed" >> $LOG1
-            exit 255
-        fi
+    else
+        echo "$(date +"%Y%m%d%H%M%S") : Mode stop failed" >> $LOG1
+        exit 255
+    fi
