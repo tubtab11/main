@@ -29,7 +29,7 @@ export LOGS=/afc/ERGnrpe/logs
 
 NOW=$(date +"%Y%m%d_%H%M%S")
 TMP_ACTIVE_SESS_FILE=$TMP/kill_active_session.sql
-LOG=$LOG_DIR/auto_kill_sesions_$NOW.log
+LOG=$LOG_DIR/check_kill_sesions.log
 LOG1=$LOGS/auto_kill_sesions_$NOW.log
 ORACLE_INITD=/app/oracle/ofsdb/init.d
 
@@ -62,14 +62,15 @@ result=$?
     if [ $result -eq 0 ];
     then
         echo "$(date +"%Y%m%d%H%M%S") : Success to connect the oracle database" >> $LOG1
-
-        if [ $result -eq 1 ];
+    
+        path=`grep "System altered." $LOG_DIR/check_kill_sesions.log`
+        if [ ! -z "$path" ];
         then
-            echo "$(date +"%Y%m%d%H%M%S") : Fail to kill the active session" >> $LOG1
-            exit 202 # how to test this error code
-        else
             echo "$(date +"%Y%m%d%H%M%S") : Success to kill the active session" >> $LOG1
             exit 0
+        else
+            echo "$(date +"%Y%m%d%H%M%S") : Fail to kill the active session" >> $LOG1
+            exit 202
         fi
     else
         echo "$(date +"%Y%m%d%H%M%S") : Fail to connect the oracle database" >> $LOG1
