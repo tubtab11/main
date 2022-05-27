@@ -63,7 +63,7 @@ result=$?
         count=`cat $TMP_ACTIVE_SESS_FILE |wc -l`
         if [ ! -z "$count" ];
         then
-            echo "There is no active session to kill." >> $LOG1
+            echo "$(date +"%Y%m%d%H%M%S") : There is no active session to kill." >> $LOG1
             exit 0
         else
             sqlplus -s "/as sysdba" < $TMP_ACTIVE_SESS_FILE >> $LOG
