@@ -33,7 +33,10 @@ check_ps()
     value=`pmstatus.pl | grep 32m | egrep -v  "Process Manager Status" | egrep -v "no response" | cut -d ' ' -f2 | cut -c8-`
     if [ ! -z "$value" ];
     then
-        echo "$(date +"%Y%m%d%H%M%S") : There is no application process."
+        echo "$(date +"%Y%m%d%H%M%S") : There is running application process." >> $LOG1
+        
+    else 
+        echo "$(date +"%Y%m%d%H%M%S") : There is no application process." >> $LOG1
         exit 0
     fi
 }
@@ -89,19 +92,20 @@ item=`nodehealth.sh|grep "Node Type" | nawk '{print $5}'|cut -c 2-4`
         exit 255
     fi
     
-        if [ $Mode == "force" ]; 
-        then
-            echo "$(date +"%Y%m%d%H%M%S") : Mode stop force" >> $LOG1
-            check_ps
-            shutdown_status
+    if [ $Mode == "force" ]; 
+    then
+        echo "$(date +"%Y%m%d%H%M%S") : Mode stop force" >> $LOG1
+        check_ps
+        force_kill
+        shutdown_status
     
-        elif [ $Mode == "normal" ]; 
-        then
-            echo "$(date +"%Y%m%d%H%M%S") : Mode stop normal" >> $LOG1
-        else
-            echo "$(date +"%Y%m%d%H%M%S") : Mode stop failed" >> $LOG1
-            exit 255
-        fi
+    elif [ $Mode == "normal" ]; 
+    then
+        echo "$(date +"%Y%m%d%H%M%S") : Mode stop normal" >> $LOG1
+    else
+        echo "$(date +"%Y%m%d%H%M%S") : Mode stop failed" >> $LOG1
+        exit 255
+    fi
 ############################
 check_ps
 stop_node
