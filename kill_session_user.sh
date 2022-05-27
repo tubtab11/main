@@ -61,7 +61,7 @@ result=$?
     if [ $result -eq 0 ];
     then
         count=`cat $TMP_ACTIVE_SESS_FILE |wc -l`
-        if [ ! -z "$count" ];
+        if [ $count -eq 0 ];
         then
             echo "$(date +"%Y%m%d%H%M%S") : There is no active session to kill." >> $LOG1
             exit 0
